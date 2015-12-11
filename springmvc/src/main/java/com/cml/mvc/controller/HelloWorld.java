@@ -2,13 +2,16 @@ package com.cml.mvc.controller;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.BoundValueOperations;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,25 +26,49 @@ import com.cml.mvc.beans.Result;
 public class HelloWorld {
 
 	Log log = LogFactory.getLog(HelloWorld.class);
-
+	private static Logger logger = Logger.getLogger(HelloWorld.class);
+	
 	private String names;
-	@Resource
-	private RedisTemplate<String, Object> redisTemplate;
+
+	@Autowired
+	private RedisTemplate<String, String> template;
+
+	// inject the template as ListOperations
+	// can also inject as Value, Set, ZSet, and HashOperations
+	@Resource(name = "redisTemplate")
+	private ListOperations<String, String> listOps;
 
 	@ResponseBody
 	@RequestMapping(name = "/helloRedis")
 	public String helloRedis() {
 		log.debug("==========>helloRedis:");
-		redisTemplate.convertAndSend("chat", "Hello from Redis!");
-		redisTemplate.restore("hello", "hello world".getBytes(), 1, TimeUnit.DAYS);
+		logger.debug("dddddddddddddddddd");
+		try {
+			listOps.leftPush("user", "am a user:" + System.currentTimeMillis());
+			template.boundValueOps("name").set("dddd");
+			BoundValueOperations<String, String> values = template.boundValueOps("name1");
+			System.out.println("======persitst:" + values.get());
+			// or use template directly
+			long id = template.boundListOps("pass").leftPush("pass");
+			String name=template.getConnectionFactory().getConnection().getClientName();
+			logger.debug(name);
+			System.out.println("===" + template.boundListOps("pass").range(0, -1).size());
+			// redisTemplate.convertAndSend("chat", "Hello from Redis!");
+			// redisTemplate.restore("hello", "hello world".getBytes(), 1,
+			// TimeUnit.DAYS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(this, e);
+			logger.error(this,e);
+		}
 		return "index";
 	}
 
-//	@ResponseBody
-//	@RequestMapping(name = "/hello")
-//	public String hello() {
-//		return "index";
-//	}
+	// @ResponseBody
+	// @RequestMapping(name = "/hello")
+	// public String hello() {
+	// return "index";
+	// }
 
 	@RequestMapping("/str")
 	@ResponseBody

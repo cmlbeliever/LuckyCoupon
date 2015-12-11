@@ -8,6 +8,15 @@
 	    </layout>
 	</appender>
 	
+		
+	<logger name="redis.clients.jedis" >
+		<level value="ALL" />
+	</logger>
+	
+	<logger name="com.cml.mvc" >
+		<level value="ALL" />
+	</logger>
+	
 	<logger name="org.apache.commons.logging.Log" >
 		<level value="ALL" />
 	</logger>

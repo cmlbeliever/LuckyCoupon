@@ -13,18 +13,20 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
-		<property name="maxIdle" value="${redis.maxIdle}" />
-	</bean>
-
-	<bean id="connectionFactory"
+	<bean id="jedisConnFactory"
 		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
-		p:host-name="${redis.host}" p:port="${redis.port}" p:password="${redis.pass}"
-		p:pool-config-ref="poolConfig" />
+		p:use-pool="true" />
 
-	<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
-		<property name="connectionFactory" ref="connectionFactory" />
-	</bean>
+	<!-- redis template definition -->
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
+		p:connection-factory-ref="jedisConnFactory" />
+
+	<!-- <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig"> 
+		<property name="maxIdle" value="${redis.maxIdle}" /> </bean> <bean id="connectionFactory" 
+		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" 
+		p:host-name="${redis.host}" p:port="${redis.port}" p:password="${redis.pass}" 
+		p:pool-config-ref="poolConfig" /> <bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate"> 
+		<property name="connectionFactory" ref="connectionFactory" /> </bean> -->
 
 
 </beans>
