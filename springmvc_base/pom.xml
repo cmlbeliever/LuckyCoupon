@@ -42,6 +42,20 @@
 
 
 	<dependencies>
+
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.8.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+			<version>1.6.1.RELEASE</version>
+		</dependency>
+
+
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-ehcache</artifactId>
@@ -350,6 +364,11 @@
 	</build>
 
 	<repositories>
+
+		<repository>
+			<id>chinaOpenSource</id>
+			<url>http://maven.oschina.net/content/groups/public/</url>
+		</repository>
 		<repository>
 			<id>codehaus</id>
 			<url>http://repository.codehaus.org</url>
@@ -376,12 +395,6 @@
 		</repository>
 		<!-- <repository> <id>atlassian</id> <url>http://repository.atlassian.com/maven2</url> 
 			</repository> -->
-
-		<repository>
-			<id>a</id>
-			<url>http://maven.oschina.net/content/groups/public/</url>
-			<layout>default</layout>
-		</repository>
 
 	</repositories>
 </project>

@@ -93,6 +93,7 @@
         </property> -->
         <property name="filterChainDefinitions">
             <value>
+            	/*=anon
             	/css/**=anon
             	/font/**=anon
             	/img/**=anon

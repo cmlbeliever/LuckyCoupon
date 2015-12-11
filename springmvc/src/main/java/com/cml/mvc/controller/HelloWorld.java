@@ -2,10 +2,14 @@ package com.cml.mvc.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.joda.time.DateTime;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,12 +25,23 @@ public class HelloWorld {
 	Log log = LogFactory.getLog(HelloWorld.class);
 
 	private String names;
+	@Resource
+	private RedisTemplate<String, Object> redisTemplate;
 
 	@ResponseBody
-	@RequestMapping(name = "/hello")
-	public String hello() {
+	@RequestMapping(name = "/helloRedis")
+	public String helloRedis() {
+		log.debug("==========>helloRedis:");
+		redisTemplate.convertAndSend("chat", "Hello from Redis!");
+		redisTemplate.restore("hello", "hello world".getBytes(), 1, TimeUnit.DAYS);
 		return "index";
 	}
+
+//	@ResponseBody
+//	@RequestMapping(name = "/hello")
+//	public String hello() {
+//		return "index";
+//	}
 
 	@RequestMapping("/str")
 	@ResponseBody
@@ -53,8 +68,7 @@ public class HelloWorld {
 	@RequestMapping("/test")
 	public String test(@RequestParam(defaultValue = "hhh") String name) {
 
-		System.out.println("hello world:" + Thread.currentThread().getId()
-				+ "," + names);
+		System.out.println("hello world:" + Thread.currentThread().getId() + "," + names);
 		names = "哈哈：changen";
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("name", "result name" + name);
@@ -65,8 +79,7 @@ public class HelloWorld {
 
 	@RequestMapping("/hello1")
 	@ResponseBody
-	public ResponseEntity<String> hello1(@RequestParam String name)
-			throws Exception {
+	public ResponseEntity<String> hello1(@RequestParam String name) throws Exception {
 		System.out.println("handler:=====>" + name);
 		throw new Exception("sssssssssssssss");
 		// return new ResponseEntity<String>("哈哈", HttpStatus.BAD_REQUEST);
