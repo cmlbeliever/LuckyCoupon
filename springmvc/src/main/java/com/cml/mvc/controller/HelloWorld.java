@@ -25,7 +25,6 @@ import com.cml.mvc.beans.Result;
 @Controller
 public class HelloWorld {
 
-	Log log = LogFactory.getLog(HelloWorld.class);
 	private static Logger logger = Logger.getLogger(HelloWorld.class);
 	
 	private String names;
@@ -41,7 +40,6 @@ public class HelloWorld {
 	@ResponseBody
 	@RequestMapping(name = "/helloRedis")
 	public String helloRedis() {
-		log.debug("==========>helloRedis:");
 		logger.debug("dddddddddddddddddd");
 		try {
 			listOps.leftPush("user", "am a user:" + System.currentTimeMillis());
@@ -58,7 +56,6 @@ public class HelloWorld {
 			// TimeUnit.DAYS);
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.error(this, e);
 			logger.error(this,e);
 		}
 		return "index";
@@ -73,7 +70,6 @@ public class HelloWorld {
 	@RequestMapping("/str")
 	@ResponseBody
 	public String str(String str) throws Exception {
-		log.debug("==========>names:" + names);
 		names = "test:" + str;
 		if (null == str) {
 			throw new Exception("xxxxx");
@@ -84,8 +80,6 @@ public class HelloWorld {
 	@RequestMapping("/times")
 	@ResponseBody
 	public Result getTime(@RequestParam Integer id, @RequestParam DateTime time) {
-		log.debug("==========>getTime,time:" + time);
-		log.debug("==========>getTime,id:" + id);
 		Result result = new Result();
 		result.setA(1);
 		return result;

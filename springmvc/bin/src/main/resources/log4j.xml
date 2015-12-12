@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" >
+
+	<appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+	    <layout class="org.apache.log4j.PatternLayout">
+	     	<param name="ConversionPattern" value="%-5p [%t] (%F:%L) - %m%n"/>
+	    </layout>
+	</appender>
+	
+	<logger name="org.apache.commons.logging.Log" >
+		<level value="ALL" />
+	</logger>
+	
+	<logger name="com.cml.mvc.framework.security.realm" >
+		<level value="ALL" />
+	</logger>
+	
+	<logger name="com.cml" >
+		<level value="ALL" />
+	</logger>
+	
+	<logger name="com.cml.mvc.base" >
+		<level value="ALL" />
+	</logger>
+	
+	<logger name="action.error">
+		<level value="ERROR" />
+	</logger>		
+	
+	<logger name="org.apache.commons.digester" >
+		<level value="FATAL" />
+	</logger>
+
+	<logger name="org.apache.struts2.interceptor.validation.AnnotationValidationInterceptor">
+		<level value="DEBUG"/>
+	</logger>
+
+	<logger name="org.apache.struts2.interceptor">
+		<level value="INFO"/>
+	</logger>
+
+	<logger name="org.apache.struts2" >
+		<level value="INFO" />
+	</logger>
+
+	<logger name="com.opensymphony.xwork2.validator" >
+		<level value="DEBUG" />
+	</logger>
+	
+	<logger name="com.opensymphony.xwork2.conversion" >
+		<level value="INFO" />
+	</logger>
+	
+	<logger name="com.opensymphony.xwork2.interceptor.ParametersInterceptor" >
+		<level value="DEBUG" />
+	</logger>
+	
+	<logger name="com.opensymphony.xwork2.interceptor">
+		<level value="INFO"/>
+	</logger>
+	
+	<logger name="com.opensymphony" >
+		<level value="INFO" />
+	</logger>
+	
+	<logger name="org.springframework" >
+		<level value="INFO" />
+	</logger>		
+	
+	<logger name="org.springframework.security">
+		<level value="INFO"/>
+	</logger>
+	
+	<logger name="org.apache.tiles" >
+		<level value="INFO" />
+	</logger>
+	
+	<logger name="com.ibatis" >
+		<level value="INFO" />
+	</logger>
+		
+	<logger name="java.sql" >
+		<level value="DEBUG" />
+	</logger>
+		
+	<logger name="freemarker.log" >
+		<level value="FATAL" />
+	</logger>
+	
+	<logger name="org.tuckey.web.filters">
+		<level value="INFO"/>
+	</logger>
+	
+	<logger name="org.apache.shiro.web.filter">
+		<level value="ALL"/>
+	</logger>
+	
+	<logger name="org.apache.shiro.mgt">
+		<level value="DEBUG"/>
+	</logger>
+	
+	<logger name="org.apache.shiro.web">
+		<level value="DEBUG"/>
+	</logger>
+	
+	<logger name="org.apache.shiro.aspectj">
+		<level value="WARN" />
+	</logger>
+	
+	<logger name="org.apache.shiro.util.ThreadContext">
+		<level value="INFO" />
+	</logger>
+	
+	<logger name="org.apache.shiro.cache">
+		<level value="INFO" />
+	</logger>
+	
+	<logger name="org.apache.shiro" >
+		<level value="DEBUG" />
+	</logger>
+	
+	<logger name="org.apache.solr.client.solrj">
+		<level value="INFO"/>
+	</logger>
+	
+	<!-- Most all Apache libs -->
+	<logger name="org.apache" >
+		<level value="WARN" />
+	</logger>
+	
+	<root>
+	    <priority value="ALL"></priority>
+		<appender-ref ref="STDOUT" />
+	</root>
+	
+</log4j:configuration>
