@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cml.mvc.redis.dao.LuckyCouponMapper">
+	<select id="getUserCoupons" resultType="TUserCoupon" parameterType="map">
+		SELECT
+			id			AS 	id,
+			coupon_id	AS	couponId,
+			user_id		AS	userId,
+			use_flg		AS	use_flg,
+			bind_date	AS	bindDate,
+			version		AS	version
+		FROM
+			t_user_coupon
+		limit
+			100
+	</select>
+</mapper>

@@ -12,7 +12,7 @@
 		http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
-
+        
 	<!-- 数据源 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
@@ -35,9 +35,15 @@
 		<!-- 自动扫描beans包名 -->
 		<property name="typeAliasesPackage" value="com.cml.mvc.beans"></property>
 		<property name="mapperLocations"
-			value="classpath:com/cml/mvc/web/**/resource/*.sql.xml"></property>
+			value="classpath:com/cml/mvc/**/resource/*.sql.xml"></property>
 	</bean>
 
+
+	<!-- 扫描mapper.java -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.cml.mvc" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
 
 	<!-- dao父类 -->
 	<bean id="baseDAO" class="org.mybatis.spring.mapper.MapperFactoryBean"
@@ -50,6 +56,7 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
+
 
 	<!-- ========================= ASPECT TRANSACTION CONFIGURATION ======================== -->
 

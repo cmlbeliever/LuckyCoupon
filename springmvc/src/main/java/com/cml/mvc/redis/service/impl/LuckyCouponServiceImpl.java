@@ -1,24 +1,24 @@
 package com.cml.mvc.redis.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.redis.core.RedisOperations;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.SessionCallback;
 import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.stereotype.Service;
 
 import com.cml.mvc.beans.TUserCoupon;
+import com.cml.mvc.redis.dao.LuckyCouponMapper;
 import com.cml.mvc.redis.service.LuckyCouponService;
 
 @Service("luckyCouponService")
@@ -34,26 +34,19 @@ public class LuckyCouponServiceImpl implements LuckyCouponService,
 	@Resource(name = "redisTemplate")
 	private ValueOperations<String, TUserCoupon> template;
 
+	@Autowired
+	private LuckyCouponMapper luckyCouponMapper;
+
 	@Override
 	@Cacheable(value = "va", key = "sd")
 	public Long setLuckyCoupon(Long userId) {
 
-		LOG.info("--setLuckyCoupon---->" + userId);
+		LOG.info("----dbQuery--->" + luckyCouponMapper.getUserCoupons(null));
 
 		// redis并不保证事务在同一个连接上执行
 		userCouponOperation.getOperations().multi();
-		for (int i = 10; i < 20; i++) {
-			TUserCoupon tuc = new TUserCoupon();
-			tuc.setCouponId(i);
-			tuc.setId(i);
-			userCouponOperation.add(KEY_USER_COUPON, tuc);
-		}
-
-		if (1 == 1) {
-			throw new RuntimeException("ddddddd");
-		}
-
-		template.set("add11", new TUserCoupon());
+		userCouponOperation.add(KEY_USER_COUPON, luckyCouponMapper
+				.getUserCoupons(null).toArray(new TUserCoupon[] {}));
 
 		userCouponOperation.getOperations().exec();
 
@@ -70,6 +63,11 @@ public class LuckyCouponServiceImpl implements LuckyCouponService,
 	public void afterPropertiesSet() throws Exception {
 		LOG.info("==afterPropertiesSet===>");
 
+	}
+
+	@Override
+	public List<TUserCoupon> getUserCoupons(Map<String, String> params) {
+		return luckyCouponMapper.getUserCoupons(params);
 	}
 
 }
