@@ -6,5 +6,5 @@ import java.util.Map;
 import com.cml.mvc.beans.TUserCoupon;
 
 public interface LuckyCouponMapper {
-	List<TUserCoupon> getUserCoupons(Map<String, String> params);
+	List<TUserCoupon> getUserCoupons(Map<String, Object> params);
 }

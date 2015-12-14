@@ -66,7 +66,7 @@ public class LuckyCouponServiceImpl implements LuckyCouponService,
 	}
 
 	@Override
-	public List<TUserCoupon> getUserCoupons(Map<String, String> params) {
+	public List<TUserCoupon> getUserCoupons(Map<String, Object> params) {
 		return luckyCouponMapper.getUserCoupons(params);
 	}
 

@@ -11,5 +11,5 @@ public interface LuckyCouponService {
 
 	public Long setLuckyCoupon(Long userId);
 
-	public List<TUserCoupon> getUserCoupons(Map<String, String> params);
+	public List<TUserCoupon> getUserCoupons(Map<String, Object> params);
 }
