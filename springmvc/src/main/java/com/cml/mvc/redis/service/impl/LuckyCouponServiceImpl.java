@@ -17,6 +17,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.stereotype.Service;
 
+import com.cml.mvc.beans.TCoupon;
 import com.cml.mvc.beans.TUserCoupon;
 import com.cml.mvc.redis.dao.LuckyCouponMapper;
 import com.cml.mvc.redis.service.LuckyCouponService;
@@ -36,6 +37,9 @@ public class LuckyCouponServiceImpl implements LuckyCouponService,
 
 	@Autowired
 	private LuckyCouponMapper luckyCouponMapper;
+
+	@Resource(name = "redisCacheServiceImpl")
+	private RedisCacheServiceImpl cacheService;
 
 	@Override
 	@Cacheable(value = "va", key = "sd")
@@ -68,6 +72,20 @@ public class LuckyCouponServiceImpl implements LuckyCouponService,
 	@Override
 	public List<TUserCoupon> getUserCoupons(Map<String, Object> params) {
 		return luckyCouponMapper.getUserCoupons(params);
+	}
+
+	@Override
+	public List<TCoupon> getLuckyCoupons() {
+		return luckyCouponMapper.getLuckyCoupons();
+	}
+
+	@Override
+	public Integer doAssignLuckCoupons() {
+
+		int assignCount = 0;
+		
+
+		return null;
 	}
 
 }

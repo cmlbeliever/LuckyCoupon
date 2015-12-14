@@ -11,7 +11,23 @@
 			version		AS	version
 		FROM
 			t_user_coupon
+		<where>
+			<if test="null != couponId">
+				coupon_id	=	#{couponId}
+			</if>
+		</where>
 		limit
 			${offset},${limit}
+	</select>
+	<select id="getLuckyCoupons" resultType="TCoupon">
+		SELECT
+			coupon_id			AS 	couponId,
+			name				AS	name,
+			type				AS	type,
+			max_assign_count	AS	maxAssignCount
+		FROM
+			t_coupon
+		WHERE
+			type = 1 <!-- 抢类型的优惠券 -->
 	</select>
 </mapper>

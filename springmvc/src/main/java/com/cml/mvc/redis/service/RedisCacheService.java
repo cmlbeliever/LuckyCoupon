@@ -1,15 +1,22 @@
 package com.cml.mvc.redis.service;
 
-import java.util.List;
-
-import com.cml.mvc.beans.TUserCoupon;
-
 public interface RedisCacheService {
 
-	String KEY_USER_COUPON = "key_cache_user_coupon";
+	String KEY_USER_COUPON_PREFIX = "key_cache_user_coupon_";
+	String KEY_COUPON_PREFIX = "key_cache_coupons_";
+	/** 用户分配优惠券key前缀 */
+	String KEY_ASSIGN_USER_COUPON_PREFIX = "key_coupon_assign_";
 
-	Integer storeUserCoupons(List<TUserCoupon> coupons);
+	String KEY_SPERATOR = ":";
 
-	TUserCoupon loadUserCoupons();
+	/**
+	 * 判断用户是否可以分配优惠券
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	boolean isAllowAssign(Long userId, int couponId);
+
+	Long getLuckyCoupons(Long userId);
 
 }
